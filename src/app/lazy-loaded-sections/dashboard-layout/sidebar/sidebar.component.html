@@ -1,0 +1,68 @@
+<nav class="sidebar-nav">
+  <ul id="sidebarnav">
+    <li class="user-profile" [class.active]="showMenu === 'user'">
+      <a class="has-arrow waves-effect waves-dark" (click)="addExpandClass('user')" aria-expanded="false">
+        <img src="../../../../assets/images/users/profile.png" alt="user" /><span class="hide-menu">Steave Jobs </span>
+      </a>
+      <ul aria-expanded="false" class="collapse" [class.in]="showMenu === 'user'">
+        <li><a href="#">My Profile </a></li>
+        <li><a href="#">My Balance</a></li>
+        <li><a href="#">Inbox</a></li>
+        <li><a href="#">Account Setting</a></li>
+        <li><a href="#">Logout</a></li>
+      </ul>
+    </li>
+
+    <li class="nav-devider"></li>
+
+    <!-- load menu from nav items array -->
+    <li *ngFor="let navItem of navItems"
+        [class.active]="showMenu === navItem.title" [routerLinkActive]="navItem.submenu.length != 0 ? '' : 'active'">
+
+      <!--show as section label-->
+      <div class="nav-small-cap" *ngIf="navItem.isSectionLabel">{{navItem.title}}</div>
+
+      <!--show as link item-->
+      <a *ngIf="!navItem.isSectionLabel" [ngClass]="[navItem.class]" (click)="addExpandClass(navItem.title)"
+         [routerLink]="navItem.class === '' ? [navItem.path] : null">
+
+        <i [ngClass]="[navItem.icon]"></i>
+        <span class="hide-menu">
+          {{navItem.title}}
+          <span *ngIf="navItem.badge != ''" [ngClass]="[navItem.badgeClass]">{{navItem.label}}</span>
+        </span>
+
+      </a>
+
+      <!-- load sub menu -->
+      <ul *ngIf="navItem.submenu.length > 0" class="collapse" [ngClass]="{'in' : navItem.title === showMenu }">
+        <li *ngFor="let subMenu of navItem.submenu" [class.active]="showSubMenu === subMenu.title"
+            [routerLinkActive]="subMenu.submenu.length > 0 ? '' : 'active'">
+
+          <a *ngIf="!subMenu.isSectionLabel" [ngClass]="[subMenu.class]" (click)="addActiveClass(subMenu.title)"
+             [routerLink]="subMenu.submenu.length > 0 ? null : [subMenu.path]"
+             [routerLinkActive]="subMenu.submenu.length > 0 ? '' : 'router-link-active'">
+
+            <i [ngClass]="[subMenu.icon]"></i> {{subMenu.title}}
+          </a>
+
+          <!-- load third level menu -->
+          <ul *ngIf="subMenu.submenu.length > 0" class="collapse" [ngClass]="{'in': subMenu.title === showSubMenu}">
+            <li *ngFor="let subSubMenu of subMenu.submenu" routerLinkActive="active" [ngClass]="[subSubMenu.class]">
+
+              <a *ngIf="!subSubMenu.isSectionLabel" [routerLink]="[subSubMenu.path]"
+                 [routerLinkActive]="subSubMenu.submenu.length > 0 ? '' : 'router-link-active'">
+
+                <i [ngClass]="[subSubMenu.icon]"></i> {{subSubMenu.title}}
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <li class="m-t-40 p-20 upgrade-btn">
+      <a href="#" class="btn btn-danger text-white">Action Button</a>
+    </li>
+  </ul>
+</nav>

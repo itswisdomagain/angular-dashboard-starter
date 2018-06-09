@@ -1,0 +1,21 @@
+<div id="main-wrapper" class="defaultdark" [ngClass]="{ 'mini-sidebar': pageWidth < 1170 }">
+
+  <app-header (toggleSidebar)="toggleSidebar()"></app-header>
+
+  <aside class="left-sidebar">
+    <div class="scroll-sidebar">
+      <app-sidebar></app-sidebar>
+    </div>
+  </aside>
+
+  <div class="page-wrapper">
+    <div class="container-fluid">
+      <app-breadcrumb></app-breadcrumb>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <footer class="footer">
+    © 2018 Consumer Protection Authentication System Demo by Rudigo
+  </footer>
+</div>
